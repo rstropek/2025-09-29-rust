@@ -3,6 +3,10 @@
 version = 4
 
 [[package]]
+name = "AoC24"
+version = "0.1.0"
+
+[[package]]
 name = "TicTacToe"
 version = "0.1.0"
 
@@ -27,6 +31,10 @@ dependencies = [
  "r-efi",
  "wasi",
 ]
+
+[[package]]
+name = "iterators"
+version = "0.1.0"
 
 [[package]]
 name = "libc"
