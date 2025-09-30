@@ -1,3 +1,5 @@
+use std::{fmt::Display, str::FromStr};
+
 #[derive(Copy, Clone, PartialEq)]
 pub enum Player {
     X,
@@ -21,13 +23,6 @@ pub enum WinnerStatus {
 }
 
 impl Playingfield {
-    pub fn new() -> Self {
-        Self {
-            current_player: Player::X,
-            grid: [[None; 3]; 3],
-        }
-    }
-
     pub fn make_move(&mut self, coordinate: Coordinate) -> Result<(), MoveError> {
         // Check if cell is already occupied
         if self.grid[coordinate.row][coordinate.col].is_some() {
@@ -80,18 +75,23 @@ impl Playingfield {
         }
 
         // Check for draw (all cells filled)
-        let is_full = self.grid.iter().all(|row| row.iter().all(|cell| cell.is_some()));
+        let is_full = self
+            .grid
+            .iter()
+            .all(|row| row.iter().all(|cell| cell.is_some()));
         if is_full {
             return WinnerStatus::Draw;
         }
 
         WinnerStatus::NoWinner
     }
+}
 
-    pub fn draw_on_console(&self) {
-        println!("\n  A   B   C");
+impl Display for Playingfield {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        writeln!(f, "\n  A   B   C")?;
         for (row_idx, row) in self.grid.iter().enumerate() {
-            print!("{} ", row_idx + 1);
+            write!(f, "{} ", row_idx + 1)?;
             for (col_idx, cell) in row.iter().enumerate() {
                 let symbol = match cell {
                     Some(Player::X) => 'X',
@@ -99,17 +99,26 @@ impl Playingfield {
                     None => ' ',
                 };
                 if col_idx < 2 {
-                    print!("{} | ", symbol);
+                    write!(f, "{} | ", symbol)?;
                 } else {
-                    print!("{}", symbol);
+                    write!(f, "{}", symbol)?;
                 }
             }
-            println!();
+            writeln!(f)?;
             if row_idx < 2 {
-                println!("  ---------");
+                writeln!(f, "  ---------")?;
             }
         }
-        println!();
+        writeln!(f)
+    }
+}
+
+impl Default for Playingfield {
+    fn default() -> Self {
+        Self {
+            current_player: Player::X,
+            grid: [[None; 3]; 3],
+        }
     }
 }
 
@@ -131,8 +140,12 @@ impl Coordinate {
     fn new(row: usize, col: usize) -> Self {
         Self { row, col }
     }
+}
 
-    pub fn from_str(input: &str) -> Result<Self, ParseCoordinateError> {
+impl FromStr for Coordinate {
+    type Err = ParseCoordinateError;
+
+    fn from_str(input: &str) -> Result<Self, Self::Err> {
         // Example input: "A1", "B2", "C3"
         // Handle wrong input gracefully
 
@@ -141,7 +154,7 @@ impl Coordinate {
         if bytes.len() != 2 {
             return Err(ParseCoordinateError::InvalidLength);
         }
-        
+
         // 2. First char must be A, B, or C
         // 4. Translate A/B/C to columns 0/1/2
         let col = match bytes[0] {
@@ -179,12 +192,12 @@ mod tests {
         // Test all 9 valid coordinates using loops
         let columns = [('A', 0), ('B', 1), ('C', 2)];
         let rows = [('1', 0), ('2', 1), ('3', 2)];
-        
+
         for (col_char, col_idx) in columns {
             for (row_char, row_idx) in rows {
                 let input = format!("{}{}", col_char, row_char);
                 assert_eq!(
-                    Coordinate::from_str(&input),
+                    input.parse(),
                     Ok(Coordinate::new(row_idx, col_idx))
                 );
             }
@@ -194,56 +207,95 @@ mod tests {
     #[test]
     fn test_coordinate_from_str_all_errors() {
         // Test invalid length
-        assert_eq!(Coordinate::from_str(""), Err(ParseCoordinateError::InvalidLength));
-        assert_eq!(Coordinate::from_str("A"), Err(ParseCoordinateError::InvalidLength));
-        assert_eq!(Coordinate::from_str("A12"), Err(ParseCoordinateError::InvalidLength));
-        
+        assert_eq!(
+            "".parse::<Coordinate>(),
+            Err(ParseCoordinateError::InvalidLength)
+        );
+        assert_eq!(
+            "A".parse::<Coordinate>(),
+            Err(ParseCoordinateError::InvalidLength)
+        );
+        assert_eq!(
+            "A12".parse::<Coordinate>(),
+            Err(ParseCoordinateError::InvalidLength)
+        );
+
         // Test invalid column
-        assert_eq!(Coordinate::from_str("D1"), Err(ParseCoordinateError::InvalidColumn));
-        assert_eq!(Coordinate::from_str("Z1"), Err(ParseCoordinateError::InvalidColumn));
-        assert_eq!(Coordinate::from_str("a1"), Err(ParseCoordinateError::InvalidColumn));
-        
+        assert_eq!(
+            "D1".parse::<Coordinate>(),
+            Err(ParseCoordinateError::InvalidColumn)
+        );
+        assert_eq!(
+            "Z1".parse::<Coordinate>(),
+            Err(ParseCoordinateError::InvalidColumn)
+        );
+        assert_eq!(
+            "a1".parse::<Coordinate>(),
+            Err(ParseCoordinateError::InvalidColumn)
+        );
+
         // Test both invalid column and row
-        assert_eq!(Coordinate::from_str("D0"), Err(ParseCoordinateError::InvalidBoth));
-        assert_eq!(Coordinate::from_str("Z9"), Err(ParseCoordinateError::InvalidBoth));
+        assert_eq!(
+            "D0".parse::<Coordinate>(),
+            Err(ParseCoordinateError::InvalidBoth)
+        );
+        assert_eq!(
+            "Z9".parse::<Coordinate>(),
+            Err(ParseCoordinateError::InvalidBoth)
+        );
 
         // Test invalid row
-        assert_eq!(Coordinate::from_str("A0"), Err(ParseCoordinateError::InvalidRow));
-        assert_eq!(Coordinate::from_str("A4"), Err(ParseCoordinateError::InvalidRow));
-        assert_eq!(Coordinate::from_str("A9"), Err(ParseCoordinateError::InvalidRow));
+        assert_eq!(
+            "A0".parse::<Coordinate>(),
+            Err(ParseCoordinateError::InvalidRow)
+        );
+        assert_eq!(
+            "A4".parse::<Coordinate>(),
+            Err(ParseCoordinateError::InvalidRow)
+        );
+        assert_eq!(
+            "A9".parse::<Coordinate>(),
+            Err(ParseCoordinateError::InvalidRow)
+        );
     }
 
     #[test]
     fn test_make_move() {
-        let mut field = Playingfield::new();
-        
+        let mut field = Playingfield::default();
+
         // Make a valid move
         let coord = Coordinate::new(0, 0);
         assert!(field.make_move(coord).is_ok());
-        
+
         // Try to move to the same cell
         let coord = Coordinate::new(0, 0);
-        assert!(matches!(field.make_move(coord), Err(MoveError::CellOccupied)));
+        assert!(matches!(
+            field.make_move(coord),
+            Err(MoveError::CellOccupied)
+        ));
     }
 
     #[test]
     fn test_winner_row() {
-        let mut field = Playingfield::new();
-        
+        let mut field = Playingfield::default();
+
         // X wins on first row
         field.make_move(Coordinate::new(0, 0)).unwrap(); // X
         field.make_move(Coordinate::new(1, 0)).unwrap(); // O
         field.make_move(Coordinate::new(0, 1)).unwrap(); // X
         field.make_move(Coordinate::new(1, 1)).unwrap(); // O
         field.make_move(Coordinate::new(0, 2)).unwrap(); // X
-        
-        assert!(matches!(field.get_winner(), WinnerStatus::Winner(Player::X)));
+
+        assert!(matches!(
+            field.get_winner(),
+            WinnerStatus::Winner(Player::X)
+        ));
     }
 
     #[test]
     fn test_winner_column() {
-        let mut field = Playingfield::new();
-        
+        let mut field = Playingfield::default();
+
         // O wins on first column
         field.make_move(Coordinate::new(0, 1)).unwrap(); // X
         field.make_move(Coordinate::new(0, 0)).unwrap(); // O
@@ -251,28 +303,34 @@ mod tests {
         field.make_move(Coordinate::new(1, 0)).unwrap(); // O
         field.make_move(Coordinate::new(0, 2)).unwrap(); // X
         field.make_move(Coordinate::new(2, 0)).unwrap(); // O
-        
-        assert!(matches!(field.get_winner(), WinnerStatus::Winner(Player::O)));
+
+        assert!(matches!(
+            field.get_winner(),
+            WinnerStatus::Winner(Player::O)
+        ));
     }
 
     #[test]
     fn test_winner_diagonal() {
-        let mut field = Playingfield::new();
-        
+        let mut field = Playingfield::default();
+
         // X wins on diagonal
         field.make_move(Coordinate::new(0, 0)).unwrap(); // X
         field.make_move(Coordinate::new(0, 1)).unwrap(); // O
         field.make_move(Coordinate::new(1, 1)).unwrap(); // X
         field.make_move(Coordinate::new(0, 2)).unwrap(); // O
         field.make_move(Coordinate::new(2, 2)).unwrap(); // X
-        
-        assert!(matches!(field.get_winner(), WinnerStatus::Winner(Player::X)));
+
+        assert!(matches!(
+            field.get_winner(),
+            WinnerStatus::Winner(Player::X)
+        ));
     }
 
     #[test]
     fn test_draw() {
-        let mut field = Playingfield::new();
-        
+        let mut field = Playingfield::default();
+
         // Fill the board with no winner
         field.make_move(Coordinate::new(0, 0)).unwrap(); // X
         field.make_move(Coordinate::new(0, 1)).unwrap(); // O
@@ -283,7 +341,7 @@ mod tests {
         field.make_move(Coordinate::new(1, 2)).unwrap(); // X
         field.make_move(Coordinate::new(2, 2)).unwrap(); // O
         field.make_move(Coordinate::new(2, 1)).unwrap(); // X
-        
+
         assert!(matches!(field.get_winner(), WinnerStatus::Draw));
     }
 }

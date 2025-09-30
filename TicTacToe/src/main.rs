@@ -1,10 +1,10 @@
 mod logic;
 
-use logic::{Playingfield, Coordinate, WinnerStatus, Player};
+use logic::{Playingfield, WinnerStatus, Player};
 use std::io::{self, Write};
 
 fn main() {
-    let mut field = Playingfield::new();
+    let mut field = Playingfield::default();
     
     println!("Welcome to Tic-Tac-Toe!");
     println!("Enter coordinates like 'A1', 'B2', 'C3', etc.");
@@ -13,7 +13,7 @@ fn main() {
 
     loop {
         // Display the current board
-        field.draw_on_console();
+        println!("{field}");
 
         // Check for winner or draw
         match field.get_winner() {
@@ -43,7 +43,7 @@ fn main() {
         let input = input.trim().to_uppercase();
 
         // Parse coordinate
-        match Coordinate::from_str(&input) {
+        match input.parse() {
             Ok(coordinate) => {
                 // Try to make the move
                 match field.make_move(coordinate) {
