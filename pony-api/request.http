@@ -1,0 +1,14 @@
+###
+GET http://localhost:3000/ping
+
+###
+GET http://localhost:3000/ponies
+
+###
+POST http://localhost:3000/ponies
+Content-Type: application/json
+
+{
+    "id": 3,
+    "name": "Princess Luna"
+}
