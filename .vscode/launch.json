@@ -1,0 +1,361 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'playground'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=playground",
+                    "--package=playground"
+                ],
+                "filter": {
+                    "name": "playground",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'playground'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=playground",
+                    "--package=playground"
+                ],
+                "filter": {
+                    "name": "playground",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'namegenerator'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=namegenerator"
+                ],
+                "filter": {
+                    "name": "namegenerator",
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'ownership'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=ownership",
+                    "--package=ownership"
+                ],
+                "filter": {
+                    "name": "ownership",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'ownership'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=ownership",
+                    "--package=ownership"
+                ],
+                "filter": {
+                    "name": "ownership",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'tower'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=tower",
+                    "--package=tower"
+                ],
+                "filter": {
+                    "name": "tower",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'tower'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=tower",
+                    "--package=tower"
+                ],
+                "filter": {
+                    "name": "tower",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'structs'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=structs",
+                    "--package=structs"
+                ],
+                "filter": {
+                    "name": "structs",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'structs'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=structs",
+                    "--package=structs"
+                ],
+                "filter": {
+                    "name": "structs",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'enums'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=enums",
+                    "--package=enums"
+                ],
+                "filter": {
+                    "name": "enums",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'enums'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=enums",
+                    "--package=enums"
+                ],
+                "filter": {
+                    "name": "enums",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'TicTacToe'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=TicTacToe",
+                    "--package=TicTacToe"
+                ],
+                "filter": {
+                    "name": "TicTacToe",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'TicTacToe'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=TicTacToe",
+                    "--package=TicTacToe"
+                ],
+                "filter": {
+                    "name": "TicTacToe",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'traits'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=traits",
+                    "--package=traits"
+                ],
+                "filter": {
+                    "name": "traits",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'traits'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=traits",
+                    "--package=traits"
+                ],
+                "filter": {
+                    "name": "traits",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'iterators'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=iterators",
+                    "--package=iterators"
+                ],
+                "filter": {
+                    "name": "iterators",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'iterators'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=iterators",
+                    "--package=iterators"
+                ],
+                "filter": {
+                    "name": "iterators",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'AoC24'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=AoC24",
+                    "--package=AoC24"
+                ],
+                "filter": {
+                    "name": "AoC24",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'AoC24'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=AoC24",
+                    "--package=AoC24"
+                ],
+                "filter": {
+                    "name": "AoC24",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
