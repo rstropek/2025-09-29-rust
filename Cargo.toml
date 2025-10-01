@@ -1,4 +1,4 @@
 [workspace]
-members = ["playground", "namegenerator", "ownership", "tower", "structs", "enums", "TicTacToe", "traits", "iterators", "AoC24", "mpsc", "refcounting", "error-handling"]
+members = ["playground", "namegenerator", "ownership", "tower", "structs", "enums", "TicTacToe", "traits", "iterators", "AoC24", "mpsc", "refcounting", "error-handling", "closures"]
 
 resolver = "2"
